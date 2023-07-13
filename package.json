@@ -18,7 +18,8 @@
     "lint:styles": "stylelint '{styles,src}/**/*.css'",
     "lint:prettier": "prettier --check '**/*.md'",
     "lint": "run-p lint:*",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.2.1",
@@ -37,6 +38,7 @@
     "electron": "^25.3.0",
     "eslint": "^8.44.0",
     "fork-ts-checker-webpack-plugin": "^7.3.0",
+    "husky": "^8.0.3",
     "node-loader": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
