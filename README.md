@@ -1,2 +1,3 @@
-# pixeliarta
+## pixeliarta
+
 Pixel art editor
