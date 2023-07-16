@@ -9,9 +9,6 @@ export const Canvas = () => {
     const [rect, setRect] = React.useState<DOMRect | undefined>();
     const style = useStyle();
 
-    // нужно прикапывать позицию курсора в redux
-    // брать позицию только тогда, когда нужно
-
     React.useEffect(() => {
         setRect(ref.current?.getBoundingClientRect());
     }, []);
