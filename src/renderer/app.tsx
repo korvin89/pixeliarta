@@ -2,9 +2,7 @@ import React from 'react';
 
 import ReactDOM from 'react-dom/client';
 
-const App = () => {
-    return <p>Ciao!</p>;
-};
+import {App} from './components';
 
 const container = document.getElementById('pixeliarta-app');
 
