@@ -1,8 +1,6 @@
-import type {UseStyle} from '../types';
-
-export const useStyle: UseStyle = () => {
+export const useStyle = (): React.CSSProperties => {
     return {
-        width: 100,
-        height: 100,
+        width: 64,
+        height: 64,
     };
 };

@@ -1,21 +1,20 @@
 import React from 'react';
 
-import {CanvasItem} from '../CanvasItem/CanvasItem';
+import {canvasPointerSelector, canvasSlice, useAppDispatch, useAppSelector} from '../../store';
 
-import {useStyle} from './useStyle';
+import {CanvasView} from './CanvasView';
+import type {SetPointer} from './types';
 
 export const Canvas = () => {
-    const ref = React.useRef<HTMLDivElement>(null);
-    const [rect, setRect] = React.useState<DOMRect | undefined>();
-    const style = useStyle();
+    const dispatch = useAppDispatch();
+    const pointer = useAppSelector(canvasPointerSelector);
 
-    React.useEffect(() => {
-        setRect(ref.current?.getBoundingClientRect());
-    }, []);
-
-    return (
-        <div ref={ref} style={style}>
-            {rect?.width && rect?.height && <CanvasItem width={rect.width} height={rect.height} />}
-        </div>
+    const setPointer: SetPointer = React.useCallback(
+        (nextPointer) => {
+            dispatch(canvasSlice.actions.setPointer({pointer: nextPointer}));
+        },
+        [dispatch],
     );
+
+    return <CanvasView setPointer={setPointer} pointer={pointer} />;
 };

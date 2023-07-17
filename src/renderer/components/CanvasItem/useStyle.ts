@@ -1,7 +1,5 @@
-import type {UseStyle} from '../types';
-
-export const useStyle: UseStyle = () => {
+export const useStyle = (): React.CSSProperties => {
     return {
-        border: '1px solid black',
+        imageRendering: 'pixelated',
     };
 };
