@@ -33,6 +33,7 @@
     "@gravity-ui/prettier-config": "^1.0.1",
     "@gravity-ui/stylelint-config": "^2.0.0",
     "@gravity-ui/tsconfig": "^1.0.0",
+    "@types/lodash": "^4.14.195",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
@@ -53,6 +54,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "electron-squirrel-startup": "^1.0.0",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1"
