@@ -1,3 +1,3 @@
-export * from './canvas.slice';
+export * from './features';
 export * from './hooks';
 export * from './store';

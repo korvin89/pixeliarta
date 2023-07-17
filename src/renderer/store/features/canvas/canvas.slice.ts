@@ -1,11 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 
+export type CanvasPointer = {
+    x: number;
+    y: number;
+};
+
 export type CanvasReduxState = {
-    pointer?: {
-        x: number;
-        y: number;
-    };
+    pointer?: CanvasPointer;
 };
 
 const initialState: CanvasReduxState = {};
@@ -14,10 +16,8 @@ export const canvasSlice = createSlice({
     name: 'canvas',
     initialState,
     reducers: {
-        setPointer: (state, action: PayloadAction<CanvasReduxState['pointer']>) => {
-            state.pointer = action.payload;
+        setPointer: (state, action: PayloadAction<{pointer?: CanvasPointer}>) => {
+            state.pointer = action.payload.pointer;
         },
     },
 });
-
-export const {setPointer} = canvasSlice.actions;
