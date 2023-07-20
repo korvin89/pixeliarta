@@ -1,6 +1,10 @@
-export const useStyle = (): React.CSSProperties => {
+type Args = {
+    scale: number;
+};
+
+export const useStyle = ({scale}: Args): React.CSSProperties => {
     return {
-        width: 64,
-        height: 64,
+        width: 32 * scale,
+        height: 32 * scale,
     };
 };
