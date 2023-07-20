@@ -1,10 +1,13 @@
+import type {Rect} from '../../store';
+
 type Args = {
     scale: number;
+    rect: Rect;
 };
 
-export const useStyle = ({scale}: Args): React.CSSProperties => {
+export const useStyle = ({scale, rect}: Args): React.CSSProperties => {
     return {
-        width: 32 * scale,
-        height: 32 * scale,
+        width: rect.w * scale,
+        height: rect.h * scale,
     };
 };

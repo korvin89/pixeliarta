@@ -1,11 +1,18 @@
 import React from 'react';
 
-import {canvasSlice, scaleSelector, useAppDispatch, useAppSelector} from '../../../../store';
+import {
+    canvasScaleSelector,
+    canvasSlice,
+    toolSelector,
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../store';
 import type {SetPointer} from '../../types';
 
 export const useStore = () => {
     const dispatch = useAppDispatch();
-    const scale = useAppSelector(scaleSelector);
+    const scale = useAppSelector(canvasScaleSelector);
+    const tool = useAppSelector(toolSelector);
 
     const setPointer: SetPointer = React.useCallback(
         (nextPointer) => {
@@ -14,5 +21,5 @@ export const useStore = () => {
         [dispatch],
     );
 
-    return {scale, setPointer};
+    return {scale, tool, setPointer};
 };

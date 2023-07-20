@@ -1,4 +1,4 @@
-import type {CanvasPointer} from '../../../../store';
+import type {BaseTool, CanvasPointer} from '../../../../store';
 
 type ConstructorArgs = {
     canvas: HTMLCanvasElement;
@@ -23,8 +23,8 @@ export class CanvasItemModel {
         this.scale = scale;
     }
 
-    draw(args: {pointer?: CanvasPointer}) {
-        const {pointer} = args;
+    draw(args: {tool: BaseTool; pointer?: CanvasPointer}) {
+        const {tool, pointer} = args;
 
         if (!pointer) {
             return;
@@ -35,13 +35,25 @@ export class CanvasItemModel {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = 'green';
 
-        // shape - rectangle (4 x 4) * scale (2)
-        // note: min should be equal 1 * scale
-        const shape = {w: 4, h: 4};
-        const x = pointer.x - (shape.w * this.scale) / 2;
-        const y = pointer.y - (shape.h * this.scale) / 2;
-        const w = shape.w * this.scale;
-        const h = shape.h * this.scale;
+        let x: number;
+        let y: number;
+
+        if (tool.rect.w > 1) {
+            const offsetX = (tool.rect.w * this.scale) / 2;
+            x = Math.round((pointer.x - offsetX) / this.scale) * this.scale;
+        } else {
+            x = Math.floor(pointer.x / this.scale) * this.scale;
+        }
+
+        if (tool.rect.h > 1) {
+            const offsetY = (tool.rect.h * this.scale) / 2;
+            y = Math.round((pointer.y - offsetY) / this.scale) * this.scale;
+        } else {
+            y = Math.floor(pointer.y / this.scale) * this.scale;
+        }
+
+        const w = tool.rect.w * this.scale;
+        const h = tool.rect.h * this.scale;
         this.ctx.fillRect(x, y, w, h);
     }
 

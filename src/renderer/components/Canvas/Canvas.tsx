@@ -5,9 +5,9 @@ import {useStore} from './useStore';
 import {useStyle} from './useStyle';
 
 export const Component = () => {
-    const {scale} = useStore();
-    const style = useStyle({scale});
-    const [rect, setRect] = React.useState<DOMRect | undefined>();
+    const {scale, rect} = useStore();
+    const style = useStyle({scale, rect});
+    const [containerRect, setRect] = React.useState<DOMRect | undefined>();
 
     const callbackRef = React.useCallback((node: HTMLDivElement) => {
         setRect(node.getBoundingClientRect());
@@ -16,12 +16,15 @@ export const Component = () => {
     return (
         <div ref={callbackRef} style={style}>
             <PointerOverlay />
-            {rect?.width && rect?.height && (
+            {containerRect?.width && containerRect?.height && (
                 <React.Fragment>
-                    <CanvasItem width={Math.ceil(rect.width)} height={Math.ceil(rect.height)} />
+                    <CanvasItem
+                        width={Math.ceil(containerRect.width)}
+                        height={Math.ceil(containerRect.height)}
+                    />
                     <Grid
-                        canvasWidth={Math.ceil(rect.width)}
-                        canvasHeight={Math.ceil(rect.height)}
+                        canvasWidth={Math.ceil(containerRect.width)}
+                        canvasHeight={Math.ceil(containerRect.height)}
                         strokeWidth={0.2}
                         cellSize={scale}
                         stroke="rgba(255, 255, 255, 0.2)"

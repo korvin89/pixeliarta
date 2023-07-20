@@ -11,7 +11,7 @@ type Props = {
 
 export const CanvasItem = (props: Props) => {
     const {width, height} = props;
-    const {scale, pointer} = useStore();
+    const {scale, pointer, tool} = useStore();
     const style = useStyle();
     const [canvasModel, setCanvasModel] = React.useState<CanvasItemModel | undefined>();
 
@@ -24,9 +24,9 @@ export const CanvasItem = (props: Props) => {
 
     React.useEffect(() => {
         if (canvasModel && pointer) {
-            canvasModel.draw({pointer});
+            canvasModel.draw({pointer, tool});
         }
-    }, [canvasModel, pointer]);
+    }, [canvasModel, pointer, tool]);
 
     return <canvas ref={callbackRef} style={style} width={width} height={height} />;
 };

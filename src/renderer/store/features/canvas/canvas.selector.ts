@@ -4,6 +4,10 @@ export const canvasPointerSelector = (state: RootState) => {
     return state.canvas.pointer;
 };
 
-export const scaleSelector = (state: RootState) => {
+export const canvasScaleSelector = (state: RootState) => {
     return state.canvas.scale;
+};
+
+export const canvasRectSelector = (state: RootState) => {
+    return state.canvas.rect;
 };
