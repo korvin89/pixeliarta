@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {CanvasItem, Grid, PointerOverlay} from './components';
+import {CanvasLayer, CanvasPointer, Grid, PointerOverlay} from './components';
 import {useStore} from './useStore';
 import {useStyle} from './useStyle';
 
 export const Component = () => {
-    const {scale, rect} = useStore();
+    const {layers, scale, rect} = useStore();
     const style = useStyle({scale, rect});
     const [containerRect, setRect] = React.useState<DOMRect | undefined>();
 
@@ -15,13 +15,19 @@ export const Component = () => {
 
     return (
         <div ref={callbackRef} style={style}>
-            <PointerOverlay />
             {containerRect?.width && containerRect?.height && (
                 <React.Fragment>
-                    <CanvasItem
+                    <CanvasPointer
                         width={Math.ceil(containerRect.width)}
                         height={Math.ceil(containerRect.height)}
                     />
+                    {layers.map((_, i) => (
+                        <CanvasLayer
+                            key={`layer-${i}`}
+                            width={Math.ceil(containerRect.width)}
+                            height={Math.ceil(containerRect.height)}
+                        />
+                    ))}
                     <Grid
                         canvasWidth={Math.ceil(containerRect.width)}
                         canvasHeight={Math.ceil(containerRect.height)}
@@ -31,6 +37,7 @@ export const Component = () => {
                     />
                 </React.Fragment>
             )}
+            <PointerOverlay />
         </div>
     );
 };
