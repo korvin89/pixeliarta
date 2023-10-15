@@ -5,25 +5,29 @@ import merge from 'lodash/merge';
 import type {Rect} from '../types';
 
 /** Pointer's data. It is assumed that the pointer is snapped to the grid */
-type CanvasPointer = {
+export type CanvasPointer = {
     x: number;
     y: number;
     pressed: boolean;
 };
 
-type CanvasLayerConfig = {
+export type CanvasLayerConfig = {
     id: string;
+    blob: Blob | null;
+};
+
+type CanvasConfig = {
+    activeLayerId: string;
+    scale: number;
+    rect: Rect;
+    layers: CanvasLayerConfig[];
+    pointer?: CanvasPointer;
 };
 
 export type TabItem = {
     id: string;
     title: string;
-    canvas: {
-        scale: number;
-        rect: Rect;
-        layers: CanvasLayerConfig[];
-        pointer?: CanvasPointer;
-    };
+    canvas: CanvasConfig;
 };
 
 export type TabsReduxState = {
@@ -38,18 +42,20 @@ const initialState: TabsReduxState = {
             id: 'tab_1',
             title: 'Tab 1',
             canvas: {
+                activeLayerId: 'layer_1',
                 scale: 25,
                 rect: {w: 16, h: 16},
-                layers: [{id: 'layer_1'}],
+                layers: [{id: 'layer_1', blob: null}],
             },
         },
         {
             id: 'tab_2',
             title: 'Tab 2',
             canvas: {
+                activeLayerId: 'layer_1',
                 scale: 25,
                 rect: {w: 16, h: 16},
-                layers: [{id: 'layer_1'}],
+                layers: [{id: 'layer_1', blob: null}],
             },
         },
     ],
@@ -95,6 +101,19 @@ export const tabsSlice = createSlice({
 
             if (tabIndex !== -1) {
                 state.items[tabIndex].canvas.layers = action.payload.layers;
+            }
+        },
+        setCanvasLayerBlob: (
+            state,
+            action: PayloadAction<{blob: CanvasLayerConfig['blob']; layerId: string}>,
+        ) => {
+            const tabIndex = getTabIndexById(state.items, state.activeTabId);
+            const layerIndex = state.items[tabIndex]?.canvas.layers.findIndex((layer) => {
+                return layer.id === action.payload.layerId;
+            });
+
+            if (layerIndex !== -1) {
+                state.items[tabIndex].canvas.layers[layerIndex].blob = action.payload.blob;
             }
         },
         setCanvasPointer: (state, action: PayloadAction<{pointer?: CanvasPointer}>) => {

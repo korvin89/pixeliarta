@@ -7,5 +7,5 @@ import {useStore} from './useStore';
 export const Workspace = () => {
     const {activeTab} = useStore();
 
-    return <div>{activeTab && <Canvas />}</div>;
+    return <div>{activeTab && <Canvas activeTabId={activeTab.id} />}</div>;
 };

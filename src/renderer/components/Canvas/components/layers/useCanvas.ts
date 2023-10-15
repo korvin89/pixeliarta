@@ -42,5 +42,20 @@ export const useCanvas = (props: Props) => {
         [scale, ctx],
     );
 
-    return {clear, draw};
+    const getImageBlob = React.useCallback(
+        (callback: BlobCallback) => {
+            canvas?.toBlob(callback);
+        },
+        [canvas],
+    );
+
+    const setImageBlob = React.useCallback(
+        async (blob: Blob) => {
+            const imageBitmap = await createImageBitmap(blob);
+            ctx?.drawImage(imageBitmap, 0, 0);
+        },
+        [ctx],
+    );
+
+    return {clear, draw, getImageBlob, setImageBlob};
 };

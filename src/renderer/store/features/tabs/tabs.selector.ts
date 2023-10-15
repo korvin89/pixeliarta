@@ -19,16 +19,12 @@ const getActiveTab = (state: RootState) => {
     return tab;
 };
 
+export const tabCanvaselector = (state: RootState) => {
+    return getActiveTab(state).canvas;
+};
+
 export const tabCanvasScaleSelector = (state: RootState) => {
     return getActiveTab(state).canvas.scale;
-};
-
-export const tabCanvasRectSelector = (state: RootState) => {
-    return getActiveTab(state).canvas.rect;
-};
-
-export const tabCanvasLayersSelector = (state: RootState) => {
-    return getActiveTab(state).canvas.layers;
 };
 
 export const tabCanvasPointerSelector = (state: RootState) => {

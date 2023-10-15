@@ -4,9 +4,13 @@ import {CanvasLayer, CanvasPointer, Grid, PointerOverlay} from './components';
 import {useStore} from './useStore';
 import {useStyle} from './useStyle';
 
-export const Component = () => {
-    const {layers, scale, rect} = useStore();
-    const style = useStyle({scale, rect});
+type Props = {
+    activeTabId: string;
+};
+
+export const Component = ({activeTabId}: Props) => {
+    const {canvas} = useStore();
+    const style = useStyle({scale: canvas.scale, rect: canvas.rect});
     const [containerRect, setRect] = React.useState<DOMRect | undefined>();
 
     const callbackRef = React.useCallback((node: HTMLDivElement) => {
@@ -21,9 +25,10 @@ export const Component = () => {
                         width={Math.ceil(containerRect.width)}
                         height={Math.ceil(containerRect.height)}
                     />
-                    {layers.map((_, i) => (
+                    {canvas.layers.map((layer, i) => (
                         <CanvasLayer
-                            key={`layer-${i}`}
+                            {...layer}
+                            key={`layer-${activeTabId}-${i}`}
                             width={Math.ceil(containerRect.width)}
                             height={Math.ceil(containerRect.height)}
                         />
@@ -32,7 +37,7 @@ export const Component = () => {
                         canvasWidth={Math.ceil(containerRect.width)}
                         canvasHeight={Math.ceil(containerRect.height)}
                         strokeWidth={0.2}
-                        cellSize={scale}
+                        cellSize={canvas.scale}
                         stroke="rgba(255, 255, 255, 0.2)"
                     />
                 </React.Fragment>
