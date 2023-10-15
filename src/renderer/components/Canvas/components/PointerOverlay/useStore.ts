@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {
-    canvasPointerSelector,
-    canvasScaleSelector,
-    canvasSlice,
+    tabCanvasPointerSelector,
+    tabCanvasScaleSelector,
+    tabsSlice,
     toolbarToolSelector,
     useAppDispatch,
     useAppSelector,
@@ -12,20 +12,20 @@ import type {SetPointer, UpdatePointer} from '../../types';
 
 export const useStore = () => {
     const dispatch = useAppDispatch();
-    const scale = useAppSelector(canvasScaleSelector);
+    const scale = useAppSelector(tabCanvasScaleSelector);
     const tool = useAppSelector(toolbarToolSelector);
-    const pointer = useAppSelector(canvasPointerSelector);
+    const pointer = useAppSelector(tabCanvasPointerSelector);
 
     const setPointer: SetPointer = React.useCallback(
         (nextPointer) => {
-            dispatch(canvasSlice.actions.setPointer({pointer: nextPointer}));
+            dispatch(tabsSlice.actions.setCanvasPointer({pointer: nextPointer}));
         },
         [dispatch],
     );
 
     const updatePointer: UpdatePointer = React.useCallback(
         (updates) => {
-            dispatch(canvasSlice.actions.updatePointer({updates}));
+            dispatch(tabsSlice.actions.updateCanvasPointer({updates}));
         },
         [dispatch],
     );

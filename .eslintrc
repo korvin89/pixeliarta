@@ -18,7 +18,8 @@
                 "selector": "TSTypeReference>TSQualifiedName[left.name='React'][right.name='FC']",
                 "message": "Don't use React.FC"
             }
-        ]
+        ],
+        "no-console": ["warn", {"allow": ["warn"] }]
     },
     "overrides": [
         {

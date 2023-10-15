@@ -1,11 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 
-import {canvasSlice, toolbarSlice} from './features';
+import {tabsSlice, toolbarSlice} from './features';
 import {logger} from './middlewares';
 
 export const store = configureStore({
     reducer: {
-        canvas: canvasSlice.reducer,
+        tabs: tabsSlice.reducer,
         toolbar: toolbarSlice.reducer,
     },
     middleware: [logger],

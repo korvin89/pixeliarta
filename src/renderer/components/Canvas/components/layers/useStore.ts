@@ -1,14 +1,14 @@
 import {
-    canvasPointerSelector,
-    canvasScaleSelector,
+    tabCanvasPointerSelector,
+    tabCanvasScaleSelector,
     toolbarColorSelector,
     toolbarToolSelector,
     useAppSelector,
 } from '../../../../store';
 
 export const useStore = () => {
-    const pointer = useAppSelector(canvasPointerSelector);
-    const scale = useAppSelector(canvasScaleSelector);
+    const pointer = useAppSelector(tabCanvasPointerSelector);
+    const scale = useAppSelector(tabCanvasScaleSelector);
     const color = useAppSelector(toolbarColorSelector);
     const tool = useAppSelector(toolbarToolSelector);
 
