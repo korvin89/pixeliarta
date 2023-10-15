@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-    tabCanvasPointerSelector,
+    pointerSelector,
     tabCanvasScaleSelector,
     tabsSlice,
     toolbarColorSelector,
@@ -12,7 +12,7 @@ import {
 
 export const useStore = () => {
     const dispatch = useAppDispatch();
-    const pointer = useAppSelector(tabCanvasPointerSelector);
+    const pointer = useAppSelector(pointerSelector);
     const scale = useAppSelector(tabCanvasScaleSelector);
     const color = useAppSelector(toolbarColorSelector);
     const tool = useAppSelector(toolbarToolSelector);

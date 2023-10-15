@@ -2,7 +2,7 @@ import React from 'react';
 
 import throttle from 'lodash/throttle';
 
-import type {BaseTool, CanvasPointer} from '../../../../store';
+import type {BaseTool, PointerReduxState} from '../../../../store';
 import {getScaledToolRect, isPointersEqual} from '../../../utils';
 
 import {useStore} from './useStore';
@@ -16,7 +16,7 @@ const shapePointer = (args: {
     deltaH: number;
     scale: number;
     pressed: boolean;
-}): CanvasPointer => {
+}): PointerReduxState => {
     const {e, containerRect, toolRect, deltaW, deltaH, scale, pressed} = args;
     const {scrollX, scrollY} = window;
     let x = e.clientX + scrollX - containerRect.left - deltaW / 2;
@@ -36,11 +36,11 @@ const shapePointer = (args: {
         y = Math.floor(y / scale) * scale;
     }
 
-    return {x, y, pressed};
+    return {position: {x, y}, pressed};
 };
 
 export const PointerOverlay = () => {
-    const {scale, tool, pointer, setPointer, updatePointer} = useStore();
+    const {scale, tool, pointer, setPointer} = useStore();
     const scaledToolRect = getScaledToolRect(scale, tool);
     const deltaW = scaledToolRect.w * 2;
     const deltaH = scaledToolRect.h * 2;
@@ -61,7 +61,7 @@ export const PointerOverlay = () => {
                         pressed: Boolean(pointer?.pressed),
                     });
 
-                    if (!isPointersEqual(pointer, nextPointer)) {
+                    if (!isPointersEqual(pointer?.position, nextPointer?.position)) {
                         setPointer(nextPointer);
                     }
                 }
@@ -75,12 +75,18 @@ export const PointerOverlay = () => {
     }, [setPointer]);
 
     const handleMouseDown = React.useCallback(() => {
-        updatePointer({pressed: true});
-    }, [updatePointer]);
+        if (pointer) {
+            const nextPointer = {...pointer, pressed: true};
+            setPointer(nextPointer);
+        }
+    }, [pointer, setPointer]);
 
     const handleMouseUp = React.useCallback(() => {
-        updatePointer({pressed: false});
-    }, [updatePointer]);
+        if (pointer) {
+            const nextPointer = {...pointer, pressed: false};
+            setPointer(nextPointer);
+        }
+    }, [pointer, setPointer]);
 
     const callbackRef = React.useCallback((node: HTMLDivElement) => {
         setContainerRect(node.getBoundingClientRect());

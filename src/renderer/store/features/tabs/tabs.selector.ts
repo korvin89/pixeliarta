@@ -26,7 +26,3 @@ export const tabCanvaselector = (state: RootState) => {
 export const tabCanvasScaleSelector = (state: RootState) => {
     return getActiveTab(state).canvas.scale;
 };
-
-export const tabCanvasPointerSelector = (state: RootState) => {
-    return getActiveTab(state).canvas.pointer;
-};

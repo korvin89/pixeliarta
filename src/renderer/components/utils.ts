@@ -1,13 +1,16 @@
-import type {BaseTool, CanvasPointer} from '../store';
+import type {BaseTool, PointerReduxState} from '../store';
 
 export const getScaledToolRect = (scale: number, tool: BaseTool): BaseTool['rect'] => {
     return {w: tool.rect.w * scale, h: tool.rect.h * scale};
 };
 
-export const isPointersEqual = (pointer1?: CanvasPointer, pointer2?: CanvasPointer) => {
-    if (!pointer1 || !pointer2) {
+export const isPointersEqual = (
+    position1?: PointerReduxState['position'],
+    position2?: PointerReduxState['position'],
+) => {
+    if (!position1 || !position2) {
         return false;
     }
 
-    return pointer1.x === pointer2.x && pointer1.y === pointer2.y;
+    return position1.x === position2.x && position1.y === position2.y;
 };

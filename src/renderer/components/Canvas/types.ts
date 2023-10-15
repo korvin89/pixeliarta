@@ -1,4 +1,3 @@
-import type {CanvasPointer} from '../../store';
+import type {PointerReduxState} from '../../store';
 
-export type SetPointer = (pointer?: CanvasPointer) => void;
-export type UpdatePointer = (pointer?: Partial<CanvasPointer>) => void;
+export type SetPointer = (pointer?: PointerReduxState) => void;

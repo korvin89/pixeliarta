@@ -1,10 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 
-import {tabsSlice, toolbarSlice} from './features';
+import {pointerSlice, tabsSlice, toolbarSlice} from './features';
 import {logger} from './middlewares';
 
 export const store = configureStore({
     reducer: {
+        pointer: pointerSlice.reducer,
         tabs: tabsSlice.reducer,
         toolbar: toolbarSlice.reducer,
     },

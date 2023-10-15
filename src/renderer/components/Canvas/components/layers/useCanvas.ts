@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type {BaseTool, CanvasPointer} from '../../../../store';
+import type {BaseTool, PointerReduxState} from '../../../../store';
 
 type Props = {
     scale: number;
@@ -10,7 +10,7 @@ type Props = {
 type DrawArgs = {
     color: string;
     tool: BaseTool;
-    pointer?: CanvasPointer;
+    pointer?: PointerReduxState;
 };
 
 export const useCanvas = (props: Props) => {
@@ -29,7 +29,7 @@ export const useCanvas = (props: Props) => {
         (args: DrawArgs) => {
             const {color, tool, pointer} = args;
 
-            if (!ctx || !pointer) {
+            if (!ctx || !pointer?.position) {
                 return;
             }
 
@@ -37,7 +37,7 @@ export const useCanvas = (props: Props) => {
             const h = tool.rect.h * scale;
 
             ctx.fillStyle = color;
-            ctx.fillRect(pointer.x, pointer.y, w, h);
+            ctx.fillRect(pointer.position.x, pointer.position.y, w, h);
         },
         [scale, ctx],
     );

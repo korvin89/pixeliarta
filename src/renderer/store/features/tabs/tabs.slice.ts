@@ -1,15 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import merge from 'lodash/merge';
 
 import type {Rect} from '../types';
-
-/** Pointer's data. It is assumed that the pointer is snapped to the grid */
-export type CanvasPointer = {
-    x: number;
-    y: number;
-    pressed: boolean;
-};
 
 export type CanvasLayerConfig = {
     id: string;
@@ -21,7 +13,6 @@ type CanvasConfig = {
     scale: number;
     rect: Rect;
     layers: CanvasLayerConfig[];
-    pointer?: CanvasPointer;
 };
 
 export type TabItem = {
@@ -114,22 +105,6 @@ export const tabsSlice = createSlice({
 
             if (layerIndex !== -1) {
                 state.items[tabIndex].canvas.layers[layerIndex].blob = action.payload.blob;
-            }
-        },
-        setCanvasPointer: (state, action: PayloadAction<{pointer?: CanvasPointer}>) => {
-            const tabIndex = getTabIndexById(state.items, state.activeTabId);
-
-            if (tabIndex !== -1) {
-                state.items[tabIndex].canvas.pointer = action.payload.pointer;
-            }
-        },
-        updateCanvasPointer: (state, action: PayloadAction<{updates?: Partial<CanvasPointer>}>) => {
-            const tabIndex = getTabIndexById(state.items, state.activeTabId);
-            const pointer = state.items[tabIndex]?.canvas.pointer;
-
-            if (pointer) {
-                const updatedPointer = merge({}, pointer, action.payload.updates);
-                state.items[tabIndex].canvas.pointer = updatedPointer;
             }
         },
     },
